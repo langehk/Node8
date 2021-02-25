@@ -5,8 +5,9 @@ const mon = require("../db/mongoWrap");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    mon.retrieve("localhost", "world", "countries", {name: "Odense"} )
+    mon.retrieve("localhost", "world", "countries")
     .then( function(worldData ){
+		console.log(worldData);
         res.render('world', { title: 'World data:', worldData });
     })
 });
@@ -20,7 +21,7 @@ router.get('/createWorld', function(req, res, next) {
 router.post('/regworld', async function(req, res, next) {
 	mon.upsert("localhost", "world", "countries", req.body, {name: req.body.name} )
 		.then ( function (rc) {
-			if (!rc)
+			if (rc)
 				res.render('regworld', { title: 'World db update', returnCode: rc });
 			else	
 				res.redirect('/');
