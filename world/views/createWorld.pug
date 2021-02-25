@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    a(href="/") Home
+    
+    form(id='regworld' action='/world/regworld' method='post')
+        table
+            tr
+                td City
+                td
+                    input(type='text' name='name' required)
+            tr
+                td Country code
+                td
+                    input(type='text' name='countrycode' required)
+            tr
+                td District
+                td
+                    input(type='text' name='district' required)
+
+            tr
+                td Population
+                td
+                    input(type='number' name='population' required)
+            tr
+                td
+                td
+                    input(type='submit' value='Submit')

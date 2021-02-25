@@ -1,0 +1,32 @@
+var express = require('express');
+var router = express.Router();
+const mon = require("../db/mongoWrap");
+
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+    mon.retrieve("localhost", "world", "countries", {name: "Odense"} )
+    .then( function(worldData ){
+        res.render('world', { title: 'World data:', worldData });
+    })
+});
+
+
+/* GET users listing. */
+router.get('/createWorld', function(req, res, next) {
+    res.render('createWorld', {title: "dav"});
+});
+
+router.post('/regworld', async function(req, res, next) {
+	mon.upsert("localhost", "world", "countries", req.body, {name: req.body.name} )
+		.then ( function (rc) {
+			if (!rc)
+				res.render('regworld', { title: 'World db update', returnCode: rc });
+			else	
+				res.redirect('/');
+		});
+});
+
+
+
+module.exports = router;
